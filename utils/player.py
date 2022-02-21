@@ -1,6 +1,7 @@
-from card import Card
-from random import choice
+from random import choice, shuffle
+from typing import List
 
+from card import Card
 
 class Player:
 
@@ -18,3 +19,29 @@ class Player:
         self.cards.remove(card)
         print(f"{self.name} on turn {self.turn_count} played: {card.value} of {card.icon}")
         return card
+
+
+
+
+
+class Deck:
+
+    def __init__(self):
+        self.deck = []
+        
+
+    def fill_deck(self):
+        self.deck.clear()
+        for suit in ["♥", "♦", "♣", "♠"]:
+            for value in ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']:
+                self.deck.append(Card(value, suit))
+    
+    def shuffle(self):
+        self.deck = shuffle(self.deck)
+
+    def distribute(self, players: List[Player]):
+
+        while self.deck:
+            for person in players:
+                person.cards.append(self.deck.pop())
+

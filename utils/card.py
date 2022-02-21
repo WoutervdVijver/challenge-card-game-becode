@@ -1,6 +1,6 @@
 
 
-class Symbol():
+class Symbol:
 
     def __init__(self, icon):
         self.icon = icon
@@ -13,6 +13,6 @@ class Symbol():
 
 class Card(Symbol):
     
-    def __init__(self, value: str):
-        super().__init__()
+    def __init__(self, value, icon):
+        super().__init__(icon)
         self.value = value
