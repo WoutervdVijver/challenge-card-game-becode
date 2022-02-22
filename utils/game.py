@@ -1,6 +1,6 @@
-from typing import List
+from typing import Dict
 
-from player import Player, Deck
+from player import Player, RealPlayer, Deck
 
 
 class Board:
@@ -15,7 +15,7 @@ class Board:
     history_cars: list of Card class objects representing cards played in previous turns this turn excluding
     """
 
-    def __init__(self, players: List[str]):
+    def __init__(self, players: Dict[str, str]):
         """
         Function that initializes Board class objects
 
@@ -30,8 +30,11 @@ class Board:
         """
         self.player_names = players
         self.players = []
-        for name in self.player_names:
-            player = Player(name)
+        for name in self.player_names.keys():
+            if self.player_names[name] == 'y':
+                player = RealPlayer(name)
+            else:
+                player = Player(name)
             self.players.append(player)
         self.turn_count = 0
         self.active_cards = []

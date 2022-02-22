@@ -70,6 +70,33 @@ class Player:
         self.number_of_cards += 1
 
 
+class RealPlayer(Player):
+    """
+    This class represents a player that can be controlled by the user
+    This class inherits from the Player class but only is play() method is changed
+    """
+    def __init__(self, name):
+        super().__init__(name)
+
+    def play(self):
+
+        for i in range(self.number_of_cards):
+            print(f"{i}: {self.cards[i].value}{self.cards[i].icon}")
+
+        choice = int(input("Give the number of the card you want to play"))
+        card = self.cards[choice]
+
+        self.number_of_cards -= 1
+        self.history.append(card)
+        self.cards.remove(card)
+        print(
+            f"{self.name} on turn {self.turn_count} played: {card.value} of {card.icon}"
+            )
+        return card
+
+
+
+
 class Deck:
     """
     The Deck class represents a standard deck of 52 playing cards.
@@ -129,3 +156,4 @@ class Deck:
                     person.receive_card(self.deck.pop())
                 else:
                     break
+
