@@ -58,6 +58,15 @@ class Player:
         )
         return card
 
+    def receive_card(self, card: Card):
+        """
+        Function that adds a card to cards attribute
+        
+        :param card: card as Card class object
+        """
+        self.cards.append(card)
+        self.number_of_cards += 1
+
 
 class Deck:
     """
@@ -115,6 +124,6 @@ class Deck:
         while self.deck:
             for person in players:
                 if self.deck:
-                    person.cards.append(self.deck.pop())
+                    person.receive_card(self.deck.pop())
                 else:
                     break
