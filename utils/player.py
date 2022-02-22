@@ -43,11 +43,13 @@ class Player:
         the following attributes are updated:
         cards
         history
+        number_of_cards
 
         """
         self.turn_count += 1
         if len(self.cards):
             card = choice(self.cards)
+            self.number_of_cards -= 1
         else:
             print(f"{self.name} on turn {self.turn_count} has no cards")
             return None
@@ -114,7 +116,7 @@ class Deck:
         """
         shuffle(self.deck)
 
-    def distribute(self, players: List):
+    def distribute(self, players: List[Player]):
         """
         Function that distributes the cards in the deck as evenly as possible into the card attributes of the players
 
