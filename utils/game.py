@@ -1,7 +1,7 @@
 from typing import Dict, List
 
-from player import Player, RealPlayer, Deck
 from card import Card
+from player import Player, RealPlayer, Deck
 
 
 class Board:
@@ -34,7 +34,7 @@ class Board:
         self.player_names = players
         self.players = []
         for name in self.player_names.keys():
-            if self.player_names[name] == 'y':
+            if self.player_names[name] == "y":
                 player = RealPlayer(name)
             else:
                 player = Player(name)
@@ -60,7 +60,7 @@ class Board:
                 These are the cards currently active {active_card_string} \n
                 These are the cards previously active {history_string}
                 """
-    
+
     def trump_setter(self, first_player: Player) -> str:
         """
         Function that asks users to choose the trump card
@@ -68,14 +68,14 @@ class Board:
         :returns trump as str
         """
         trumps = ["♥", "♦", "♣", "♠", "SA"]
-        
+
         print(f"""This is your hand, {first_player.name}:""")
         for i in range(first_player.number_of_cards):
             print(f"{i}: {first_player.cards[i].value}{first_player.cards[i].icon}")
 
         print("\nThese are the options for trump:")
         for i in range(len(trumps)):
-             print(f"{i}: {trumps[i]}")
+            print(f"{i}: {trumps[i]}")
 
         trump = int(input("What is the trump suit for this game?"))
         return trumps[trump]
@@ -84,7 +84,8 @@ class Board:
         """
         Function that prints the introduction of the game
         """
-        print("""
+        print(
+            """
             Welcome to \' The Card Game \'
             The rules are as follows:
             Each player are dealt cards and the first player chooses a trump suit or to play without a trump suit aka SA or \'Sans Atout\'.
@@ -97,8 +98,8 @@ class Board:
             Jack is worth 2 points
             10 is worth 1 point.
             First player to get to 25 points wins or whoever has the highest score at the end of the game
-            """)
-    
+            """
+        )
 
     def start_game(self):
         """
@@ -106,22 +107,22 @@ class Board:
         After each turn the state of the game is printed.
         """
 
-        #The game is introduced
+        # The game is introduced
         self.introduction()
 
-        #The deck is set up
+        # The deck is set up
         deck = Deck()
         deck.fill_deck()
         deck.shuffle()
         deck.distribute(self.players)
 
-        #The first player chooses the trump suit
-        first_player= self.players[0]
+        # The first player chooses the trump suit
+        first_player = self.players[0]
 
         trump = self.trump_setter(first_player)
         game_state = GameState(trump)
 
-        #players take turns
+        # players take turns
         while len(self.history_cards) < 52 - len(self.players):
 
             self.turn_count += 1
@@ -132,7 +133,7 @@ class Board:
             for player in self.players:
                 card = player.play(player.choose_card())
                 who_played_what[card] = player
-                if card!=None:
+                if card != None:
                     self.active_cards.append(card)
 
             winning_card = game_state.winning_card(self.active_cards)
@@ -140,7 +141,7 @@ class Board:
             score = game_state.scorer(self.active_cards)
             winning_player.receive_score(score)
 
-            #The state of the game is printed
+            # The state of the game is printed
             print(
                 f"""
                 Turn {self.turn_count}: {[card.value + card.icon for card in self.active_cards]} \n
@@ -152,32 +153,31 @@ class Board:
                 print(f"{player.name}: {str(player.score)}")
             print(" ")
 
-            #We check if there is a winner
-            if winning_player.score>25:
-                print(f"""
+            # We check if there is a winner
+            if winning_player.score > 25:
+                print(
+                    f"""
                 with score of {winning_player.score} {winning_player.name} won the game!"
-                """)
+                """
+                )
                 break
-        
+
         # After all turns are played we pick those who have the highest score
         winning_players = []
         winning_score = 0
         for player in self.players:
-            if player.score>winning_score:
+            if player.score > winning_score:
                 winning_score = player.score
                 winning_players.clear()
                 winning_players.append(player)
-            elif player.score>winning_score:
+            elif player.score > winning_score:
                 winning_players.append(player)
             else:
                 continue
 
         for winner in winning_players:
             print(f"""With a score of {winner.score} {winner.name} won the game!""")
-          
-    
-            
-    
+
 
 class GameState:
     """
@@ -190,65 +190,70 @@ class GameState:
     game_value: a dictionary giving a game value for each card value
     scores: a dictionary giving a score for each card value
     """
+
     def __init__(self, trump):
         self.trump = trump
-        self.game_value = {'A': 13,
-                        'K':12,
-                        'Q': 11,
-                        'J': 10,
-                        '10': 9,
-                        '9': 8,
-                        '8': 7,
-                        '7': 6,
-                        '6': 5,
-                        '5': 4,
-                        '4': 3,
-                        '3': 2,
-                        '2': 1,
+        self.game_value = {
+            "A": 13,
+            "K": 12,
+            "Q": 11,
+            "J": 10,
+            "10": 9,
+            "9": 8,
+            "8": 7,
+            "7": 6,
+            "6": 5,
+            "5": 4,
+            "4": 3,
+            "3": 2,
+            "2": 1,
         }
 
-        self.scores = {'A': 5,
-                        'K':4,
-                        'Q': 3,
-                        'J': 2,
-                        '10': 1,
-                        '9': 0,
-                        '8': 0,
-                        '7': 0,
-                        '6': 0,
-                        '5': 0,
-                        '4': 0,
-                        '3': 0,
-                        '2': 0,
+        self.scores = {
+            "A": 5,
+            "K": 4,
+            "Q": 3,
+            "J": 2,
+            "10": 1,
+            "9": 0,
+            "8": 0,
+            "7": 0,
+            "6": 0,
+            "5": 0,
+            "4": 0,
+            "3": 0,
+            "2": 0,
         }
 
     def __str__(self) -> str:
-        print(f"""
+        print(
+            f"""
             The trump suit is {self.trump}
             The game values are {self.game_value}
             The game scores are {self.scores}
-            """)
+            """
+        )
 
     def winning_card(self, list_of_cards: List[Card]) -> Card:
         """
-         Function that given a list of cards returns the winning card
+        Function that given a list of cards returns the winning card
 
-         :params list_of cards: 
+        :params list_of cards:
 
-         :return: Card
+        :return: Card
         """
         winning_card = list_of_cards[0]
         for card in list_of_cards:
-            if winning_card.icon!=self.trump and card.icon!=self.trump:
+            if winning_card.icon != self.trump and card.icon != self.trump:
                 if self.game_value[winning_card.value] < self.game_value[card.value]:
                     winning_card = card
-            elif winning_card.icon!=self.trump and card.icon==self.trump:
+            elif winning_card.icon != self.trump and card.icon == self.trump:
                 winning_card = card
-            elif winning_card.icon==self.trump and card.icon==self.trump:
+            elif winning_card.icon == self.trump and card.icon == self.trump:
                 if self.game_value[winning_card.value] < self.game_value[card.value]:
                     winning_card = card
-        
-        return winning_card 
+
+        return winning_card
 
     def scorer(self, list_of_cards: List[Card]) -> int:
         """

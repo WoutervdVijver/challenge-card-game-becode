@@ -12,9 +12,9 @@ In this challenge we were asked to create a card game. It has the following feat
 - The game selects a winner out of the players at the end of the game.
 
 ## Installation
-It requires a version of python3 to run. Download the main.py as well as everything the utils file.
+It requires a version of python3 to run. Download the main.py as well as everything the utils folder.
 
 ## Usage
-Run the main file. It will ask the number of player. For each player it will ask for a name and if they are a bot or human. If you choose human you get control over that player.
+Run the main file. It will ask for the number of players. For each player it will ask for a name and if they are a bot or human. If you choose human you get control over that player.
 The first player will be asked to choose a trump card and each turn the human players will be asked wich card to play.
 If the game conditions are met or everyone is out of cards the game will pick a winner.

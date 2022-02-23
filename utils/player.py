@@ -1,5 +1,5 @@
-from typing import List
 from random import choice, shuffle
+from typing import List
 
 from card import Card
 
@@ -46,7 +46,6 @@ class Player:
         else:
             return None
 
-
     def play(self, card: Card) -> Card:
         """
         Function that simulates player playing a card.
@@ -68,18 +67,16 @@ class Player:
             self.history.append(card)
             self.cards.remove(card)
             print(
-            f"{self.name} on turn {self.turn_count} played: {card.value} of {card.icon}"
+                f"{self.name} on turn {self.turn_count} played: {card.value} of {card.icon}"
             )
             return card
         else:
-            print(
-            f"{self.name} on turn {self.turn_count} has no cards left"
-            )
+            print(f"{self.name} on turn {self.turn_count} has no cards left")
 
     def receive_card(self, card: Card):
         """
         Function that adds a card to cards attribute
-        
+
         :param card: card as Card class object
         """
         self.cards.append(card)
@@ -94,12 +91,12 @@ class Player:
         self.score += score
 
 
-
 class RealPlayer(Player):
     """
     This class represents a player that can be controlled by the user
     This class inherits from the Player class
     """
+
     def __init__(self, name):
         super().__init__(name)
 
@@ -109,25 +106,24 @@ class RealPlayer(Player):
 
         :return: a Card class object
         """
-        
+
         if not self.cards:
             return None
-        
-        #Print all cards from cards attribute
+
+        # Print all cards from cards attribute
         for i in range(self.number_of_cards):
             print(f"{i}: {self.cards[i].value}{self.cards[i].icon}")
 
         # ask what card to play and return it
         choice = int(input("Give the number of the card you want to play:"))
-        while  choice>=self.number_of_cards:
-            choice = int(input("""This is not a valid choice!
-                        Give the number of the card you want to play:"""))
+        while choice >= self.number_of_cards:
+            choice = int(
+                input(
+                    """This is not a valid choice!
+                        Give the number of the card you want to play:"""
+                )
+            )
         return self.cards[choice]
-
-
-
-
-
 
 
 class Deck:
@@ -189,4 +185,3 @@ class Deck:
                     person.receive_card(self.deck.pop())
                 else:
                     break
-
