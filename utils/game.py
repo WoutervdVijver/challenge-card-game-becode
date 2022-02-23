@@ -96,7 +96,7 @@ class Board:
             Queen is worth 3 points 
             Jack is worth 2 points
             10 is worth 1 point.
-            First player to get to 10 points wins.
+            First player to get to 25 points wins or whoever has the highest score at the end of the game
             """)
     
 
@@ -105,19 +105,23 @@ class Board:
         Function that simulates playing of a game.
         After each turn the state of the game is printed.
         """
+
+        #The game is introduced
         self.introduction()
 
+        #The deck is set up
         deck = Deck()
         deck.fill_deck()
         deck.shuffle()
         deck.distribute(self.players)
 
+        #The first player chooses the trump suit
         first_player= self.players[0]
 
         trump = self.trump_setter(first_player)
         game_state = GameState(trump)
 
-
+        #players take turns
         while len(self.history_cards) < 52 - len(self.players):
 
             self.turn_count += 1
@@ -126,17 +130,17 @@ class Board:
 
             who_played_what = {}
             for player in self.players:
-
                 card = player.play(player.choose_card())
                 who_played_what[card] = player
-                self.active_cards.append(card)
+                if card!=None:
+                    self.active_cards.append(card)
 
             winning_card = game_state.winning_card(self.active_cards)
             winning_player = who_played_what[winning_card]
             score = game_state.scorer(self.active_cards)
             winning_player.receive_score(score)
 
-
+            #The state of the game is printed
             print(
                 f"""
                 Turn {self.turn_count}: {[card.value + card.icon for card in self.active_cards]} \n
@@ -148,11 +152,28 @@ class Board:
                 print(f"{player.name}: {str(player.score)}")
             print(" ")
 
-            if winning_player.score>10:
+            #We check if there is a winner
+            if winning_player.score>25:
                 print(f"""
-                {winning_player.name} won the game!"
+                with score of {winning_player.score} {winning_player.name} won the game!"
                 """)
                 break
+        
+        # After all turns are played we pick those who have the highest score
+        winning_players = []
+        winning_score = 0
+        for player in self.players:
+            if player.score>winning_score:
+                winning_score = player.score
+                winning_players.clear()
+                winning_players.append(player)
+            elif player.score>winning_score:
+                winning_players.append(player)
+            else:
+                continue
+
+        for winner in winning_players:
+            print(f"""With a score of {winner.score} {winner.name} won the game!""")
           
     
             

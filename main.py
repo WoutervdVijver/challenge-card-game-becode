@@ -15,7 +15,7 @@ while number_of_players == 0:
 player_names = {}
 for i in range(number_of_players):
     name = str(input(f"What is the name of player {i+1}?"))
-    bot_or_not = str(input(f"Type y if you a not a bot?"))
+    bot_or_not = str(input(f"Are you human and not a bot? y/n" ))
     player_names[name] = bot_or_not
 
 # We run the game
