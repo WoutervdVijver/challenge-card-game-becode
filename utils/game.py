@@ -60,18 +60,62 @@ class Board:
                 These are the cards currently active {active_card_string} \n
                 These are the cards previously active {history_string}
                 """
+    
+    def trump_setter(self, first_player: Player) -> str:
+        """
+        Function that asks users to choose the trump card
+
+        :returns trump as str
+        """
+        trumps = ["♥", "♦", "♣", "♠", "SA"]
+        
+        print(f"""This is your hand, {first_player.name}:""")
+        for i in range(first_player.number_of_cards):
+            print(f"{i}: {first_player.cards[i].value}{first_player.cards[i].icon}")
+
+        print("\nThese are the options for trump:")
+        for i in range(len(trumps)):
+             print(f"{i}: {trumps[i]}")
+
+        trump = int(input("What is the trump suit for this game?"))
+        return trumps[trump]
+
+    def introduction(self):
+        """
+        Function that prints the introduction of the game
+        """
+        print("""
+            Welcome to \' The Card Game \'
+            The rules are as follows:
+            Each player are dealt cards and the first player chooses a trump suit or to play without a trump suit aka SA or \'Sans Atout\'.
+            Each round the first player opens. This card can only beaten by a card of the same suit or a trump card.
+            Higher values beat lower values with the Ace being the highest card.
+            The person how plays who wins the turn and scores points.
+            Ace is worth 5 points
+            Kings is worth 4 points
+            Queen is worth 3 points 
+            Jack is worth 2 points
+            10 is worth 1 point.
+            First player to get to 10 points wins.
+            """)
+    
 
     def start_game(self):
         """
-        Function that simulates the playing of a game.
+        Function that simulates playing of a game.
         After each turn the state of the game is printed.
         """
+        self.introduction()
+
         deck = Deck()
         deck.fill_deck()
         deck.shuffle()
         deck.distribute(self.players)
 
-        game_state = GameState("SA")
+        first_player= self.players[0]
+
+        trump = self.trump_setter(first_player)
+        game_state = GameState(trump)
 
 
         while len(self.history_cards) < 52 - len(self.players):
@@ -156,6 +200,13 @@ class GameState:
                         '3': 0,
                         '2': 0,
         }
+
+    def __str__(self) -> str:
+        print(f"""
+            The trump suit is {self.trump}
+            The game values are {self.game_value}
+            The game scores are {self.scores}
+            """)
 
     def winning_card(self, list_of_cards: List[Card]) -> Card:
         """
