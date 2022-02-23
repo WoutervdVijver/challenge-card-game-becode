@@ -77,7 +77,7 @@ class Board:
 
             for player in self.players:
 
-                card = player.play()
+                card = player.play(player.choose_card())
                 if card != None:
                     self.active_cards.append(card)
 

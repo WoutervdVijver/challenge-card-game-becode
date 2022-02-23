@@ -34,11 +34,25 @@ class Player:
         self.number_of_cards = 0
         self.history = []
 
-    def play(self) -> Card:
+    def choose_card(self) -> Card:
+        """
+        Function that randomly choose a card from cards attribute
+
+        :return card from Card class and None if no cards in cards attribute left
+        """
+        if len(self.cards):
+            return choice(self.cards)
+        else:
+            return None
+
+
+    def play(self, card: Card) -> Card:
         """
         Function that simulates player playing a card.
 
-        :return: a randomly chosen card from attribute card and None if the player has no cards.
+        :param card as Card class object
+
+        :return: a Card class object from attribute card
 
         the following attributes are updated:
         cards
@@ -46,19 +60,20 @@ class Player:
         number_of_cards
 
         """
+
         self.turn_count += 1
-        if len(self.cards):
-            card = choice(self.cards)
+        if card:
             self.number_of_cards -= 1
-        else:
-            print(f"{self.name} on turn {self.turn_count} has no cards")
-            return None
-        self.history.append(card)
-        self.cards.remove(card)
-        print(
+            self.history.append(card)
+            self.cards.remove(card)
+            print(
             f"{self.name} on turn {self.turn_count} played: {card.value} of {card.icon}"
-        )
-        return card
+            )
+            return card
+        else:
+            print(
+            f"{self.name} on turn {self.turn_count} has no cards left"
+            )
 
     def receive_card(self, card: Card):
         """
@@ -70,29 +85,36 @@ class Player:
         self.number_of_cards += 1
 
 
+
 class RealPlayer(Player):
     """
     This class represents a player that can be controlled by the user
-    This class inherits from the Player class but only is play() method is changed
+    This class inherits from the Player class
     """
     def __init__(self, name):
         super().__init__(name)
 
-    def play(self):
-
+    def choose_card(self) -> Card:
+        """
+        Function that allows the user to pick a card from cards attribute
+        """
+        
+        if not self.cards:
+            return None
+        
+        #Print all cards from cards attribute
         for i in range(self.number_of_cards):
             print(f"{i}: {self.cards[i].value}{self.cards[i].icon}")
 
-        choice = int(input("Give the number of the card you want to play"))
-        card = self.cards[choice]
+        # ask what card to play and return it
+        choice = int(input("Give the number of the card you want to play:"))
+        while  choice>=self.number_of_cards:
+            choice = int(input("""This is not a valid choice!
+                        Give the number of the card you want to play:"""))
+        return self.cards[choice]
 
-        self.number_of_cards -= 1
-        self.history.append(card)
-        self.cards.remove(card)
-        print(
-            f"{self.name} on turn {self.turn_count} played: {card.value} of {card.icon}"
-            )
-        return card
+
+
 
 
 
