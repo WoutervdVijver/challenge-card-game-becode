@@ -6,10 +6,10 @@ In this challenge we were asked to create a card game. It has the following feat
 - The game is working until each player doesn't have any cards left.
 - The game generates all the cards.
 - The game distributes all the cards.
-- Make the game interactive, at each turn, ask the player which card he/her wants to play.
-- Create game-over conditions and add the possibility in the game to end because of the aforementioned conditions.
-- Add points for each player if the card is the most `powerful` card played that turn.
-- Select a winner out of the players at the end of the game.
+- The game is interactive, at each turn, the human players are asked which card he/she wants to play.
+- The game has game-over conditions and  the possibility to end because of the aforementioned conditions.
+- The game adds points for each player if the card is the most `powerful` card played that turn.
+- The game selects a winner out of the players at the end of the game.
 
 ## Installation
 It requires a version of python3 to run. Download the main.py as well as everything the utils file.
