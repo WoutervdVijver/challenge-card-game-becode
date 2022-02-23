@@ -33,6 +33,7 @@ class Player:
         self.turn_count = 0
         self.number_of_cards = 0
         self.history = []
+        self.score = 0
 
     def choose_card(self) -> Card:
         """
@@ -84,6 +85,14 @@ class Player:
         self.cards.append(card)
         self.number_of_cards += 1
 
+    def receive_score(self, score: int):
+        """
+        Function that adds score to player
+
+        :param score: int
+        """
+        self.score += score
+
 
 
 class RealPlayer(Player):
@@ -97,6 +106,8 @@ class RealPlayer(Player):
     def choose_card(self) -> Card:
         """
         Function that allows the user to pick a card from cards attribute
+
+        :return: a Card class object
         """
         
         if not self.cards:
