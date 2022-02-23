@@ -21,14 +21,14 @@ class Board:
         """
         Function that initializes Board class objects
 
-        :param player: list of strings of player names
+        :param player: Dictionary of str of player names as keys : str 'y' or 'n' as values
 
         :initializes:
+        player_names: list of str of player names
         players: a list of Player class objects with the given names from param player
         turn_count: int 0
         active_cards: empty list
         history_cards: empty list
-        trump: str "SA"
 
         """
         self.player_names = players
@@ -63,7 +63,9 @@ class Board:
 
     def trump_setter(self, first_player: Player) -> str:
         """
-        Function that asks users to choose the trump card
+        Function that asks a user to choose the trump card
+
+        :param first_player as Player
 
         :returns trump as str
         """
@@ -77,7 +79,7 @@ class Board:
         for i in range(len(trumps)):
             print(f"{i}: {trumps[i]}")
 
-        trump = int(input("What is the trump suit for this game?"))
+        trump = int(input("What is the trump suit for this game?\n"))
         return trumps[trump]
 
     def introduction(self):
@@ -86,6 +88,7 @@ class Board:
         """
         print(
             """
+
             Welcome to \' The Card Game \'
             The rules are as follows:
             Each player are dealt cards and the first player chooses a trump suit or to play without a trump suit aka SA or \'Sans Atout\'.
@@ -97,7 +100,8 @@ class Board:
             Queen is worth 3 points 
             Jack is worth 2 points
             10 is worth 1 point.
-            First player to get to 25 points wins or whoever has the highest score at the end of the game
+            First player to get to 25 points wins or whoever has the highest score at the end of the game.
+
             """
         )
 
@@ -105,6 +109,7 @@ class Board:
         """
         Function that simulates playing of a game.
         After each turn the state of the game is printed.
+        Finally the winner(s) are printed
         """
 
         # The game is introduced

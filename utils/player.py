@@ -84,7 +84,7 @@ class Player:
 
     def receive_score(self, score: int):
         """
-        Function that adds score to player
+        Function that adds score to score attribute
 
         :param score: int
         """
@@ -94,7 +94,7 @@ class Player:
 class RealPlayer(Player):
     """
     This class represents a player that can be controlled by the user
-    This class inherits from the Player class
+    This class inherits from the Player class and overrides the choose_card() method
     """
 
     def __init__(self, name):
